@@ -1,4 +1,4 @@
 def call()
 {
-    println("Deployed sucessfully")
+    println("Deployed sucessfully");
 }
