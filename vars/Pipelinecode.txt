@@ -1,0 +1,70 @@
+library identifier: 'mylibrary@main',
+    // 'mylibraryname' is just an identifier, it can be anything you like
+    // 'master' refers to a valid git ref (branch)
+    retriever: modernSCM([
+      $class: 'GitSCMSource',
+      remote: 'https://github.com/Dineshgit7/Jenkinsrepo.git',branch: 'master'
+])
+
+pipeline {
+  agent any
+
+  options {
+    timeout(time: 60, unit: 'MINUTES')
+    timestamps()
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+  }
+
+  stages {
+
+    stage('init') {
+      steps {
+        init.groovy
+      }
+    }
+
+    stage('Checkout') {
+      steps {
+        Checkout
+      }
+    }
+
+    stage('Build') {
+      steps {
+        Build
+      }
+    }
+
+    stage('Test') {
+      steps {
+        Test
+      }
+    }    
+
+    stage('Deploy') {
+      steps {
+        Deploy
+      }
+    }
+  }
+
+  post {
+    success {
+      echo "SUCCESS"
+    }
+    failure {
+      echo "FAILURE"
+    }
+    changed {
+      echo "Status Changed: [From: $currentBuild.previousBuild.result, To: $currentBuild.result]"
+    }
+    always {
+      script {
+        def result = currentBuild.result
+        if (result == null) {
+          result = "SUCCESS"
+        }
+      }
+    }
+  }
+}
