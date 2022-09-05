@@ -17,7 +17,7 @@ pipeline:
     - "timeout(time: 1, unit: 'HOURS')"
     - skipDefaultCheckout()
   stages:
-    - stage: Basic Stage
+    - stage: "Basic Stage"
       steps:
         - echo "Basic Stage"
     - stage: "Basic Stage - Script"
