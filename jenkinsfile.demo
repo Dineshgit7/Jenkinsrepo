@@ -3,7 +3,7 @@ pipeline:
     node:
       label: "master"
   tools:
-    jdk: default
+    jdk: "JAVA_HOME"
   triggers:
     - cron('H */4 * * 1-5')
     - pollSCM('H */4 * * 1-5')
